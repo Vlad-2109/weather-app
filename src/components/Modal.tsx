@@ -48,7 +48,7 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({
               <div className="text-center font-semibold text-3xl mb-5">
                 Weather info
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-y-2">
                 <div className="flex items-center font-medium gap-x-1">
                   <img className="block w-7 h-7" src={currentTemperature} />
                   <p>Current Temperature:</p>
