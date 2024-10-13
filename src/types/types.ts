@@ -40,8 +40,22 @@ export interface IUser {
   };
 }
 
+export interface IWeather {
+  current: { temperature: number; weatherCode: number };
+  daily: {
+    maxTemperature: number;
+    minTemperature: number;
+  };
+}
+
+export interface IUserWeatherData {
+  user: IUser;
+  weather: IWeather;
+}
+
 export interface CardProps {
   user: IUser;
+  saveButton: boolean;
   loading: boolean;
   onWeatherClick: (weather: any) => void;
 }

@@ -1,5 +1,4 @@
 import weatherClear from '../assets/img/weather[0].svg';
-
 import weatherMainly from '../assets/img/weather[1,2,3].svg';
 import weatherFog from '../assets/img/weather[45,48].svg';
 import weatherDrizzle from '../assets/img/weather[51,53,55].svg';

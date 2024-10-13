@@ -20,13 +20,7 @@ const style = {
   borderRadius: '32px',
 };
 
-export const ModalWindow: React.FC<ModalWindowProps> = ({
-  open,
-  weatherModal,
-  handleClose,
-}) => {
-  console.log('weatherModal', weatherModal);
-
+export const ModalWindow: React.FC<ModalWindowProps> = ({open, weatherModal, handleClose}) => {
   return (
     <div>
       <Modal

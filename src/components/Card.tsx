@@ -4,20 +4,21 @@ import { toast } from 'react-toastify';
 import { FaMale, FaFemale } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
 import { IoLocationSharp } from 'react-icons/io5';
-import { CardProps, IUser } from '../types/types';
+import { CardProps, IUser, IWeather } from '../types/types';
 import { getWeatherData } from '../api/weather.api';
 import { getWeatherIcon } from '../helpers/weather.helper';
 import highestTemperature from '../assets/img/high-temperature.svg';
 import lowestTemperature from '../assets/img/low-temperature.svg';
 import Button from '@mui/material/Button';
-import { localStorageHelper } from '../helpers/localStorage.helper';
+import { setLocalStorage } from '../helpers/localStorage.helper';
 
 export const Card: React.FC<CardProps> = ({
   user,
   loading,
+  saveButton,
   onWeatherClick,
 }) => {
-  const [weather, setWeather] = useState<any>(null);
+  const [weather, setWeather] = useState<IWeather | null>(null);
   console.log('user', user);
   console.log('weather', weather);
   console.log('loading', loading);
@@ -41,7 +42,7 @@ export const Card: React.FC<CardProps> = ({
   }, [user]);
 
   const saveHandler = (weather: any, user: IUser) => {
-    localStorageHelper(weather, user);
+    setLocalStorage(weather, user);
   };
 
   return (
@@ -104,7 +105,7 @@ export const Card: React.FC<CardProps> = ({
             <div className="flex justify-center items-center">
               <img
                 className="block w-[100px] h-full"
-                src={getWeatherIcon(weather?.current.weatherCode)}
+                src={getWeatherIcon(weather?.current.weatherCode ?? 0)}
                 alt="weather-icon"
               />
               <div className="h-full text-[100px] leading-[100px] font-light">
@@ -137,29 +138,35 @@ export const Card: React.FC<CardProps> = ({
               <div className="text-xs self-start">°C</div>
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center mt-10">
-            <Button
-              variant="outlined"
-              sx={{
-                color: '#fff',
-                borderColor: '#fff',
-                borderRadius: '8px',
-              }}
-              onClick={() => saveHandler(weather, user)}
-            >
-              Save
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                color: '#fff',
-                borderColor: '#fff',
-                borderRadius: '8px',
-              }}
-              onClick={() => onWeatherClick(weather)}
-            >
-              Weather
-            </Button>
+          <div
+            className={`flex flex-row ${!saveButton ? 'justify-center' : 'justify-between'} items-center mt-10`}
+          >
+            <div className={`${!saveButton ? 'hidden' : ''}`}>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: '#fff',
+                  borderColor: '#fff',
+                  borderRadius: '8px',
+                }}
+                onClick={() => saveHandler(weather, user)}
+              >
+                Save
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: '#fff',
+                  borderColor: '#fff',
+                  borderRadius: '8px',
+                }}
+                onClick={() => onWeatherClick(weather)}
+              >
+                Weather
+              </Button>
+            </div>
           </div>
         </div>
       )}

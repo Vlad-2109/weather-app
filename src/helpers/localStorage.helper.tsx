@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { IUser } from '../types/types';
 
-export const localStorageHelper = (weather: any, user: IUser) => {
+export const setLocalStorage = (weather: any, user: IUser) => {
   if (weather && user) {
     const userWeatherData = {
       user,
@@ -25,4 +25,10 @@ export const localStorageHelper = (weather: any, user: IUser) => {
   } else {
     toast.error('Failed to save data, missing weather or user data');
   }
+};
+
+export const getLocalStorage = () => {
+  const savedData = JSON.parse(localStorage.getItem('userWeatherList') || '[]');
+
+  return savedData;
 };
