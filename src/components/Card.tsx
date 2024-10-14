@@ -39,6 +39,13 @@ export const Card: React.FC<CardProps> = ({
     };
 
     fetchWeather();
+
+    const intervalId = setInterval(() => {
+      fetchWeather();
+    }, 300000)
+
+    return () => clearInterval(intervalId);
+
   }, [user]);
 
   const saveHandler = (weather: any, user: IUser) => {
