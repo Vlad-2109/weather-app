@@ -58,10 +58,23 @@ export interface CardProps {
   saveButton: boolean;
   loading: boolean;
   onWeatherClick: (weather: any) => void;
+  onMapClick: (user: IUser) => void;
 }
 
 export interface ModalWindowProps {
   open: boolean;
   weatherModal: any;
   handleClose: () => void;
+}
+
+export interface ModalMapWindowProps {
+  open: boolean;
+  userMapModal: any;
+  handleClose: () => void;
+}
+
+export interface UserMapProps {
+  latitude: number;
+  longitude: number;
+  userPicture: string;
 }

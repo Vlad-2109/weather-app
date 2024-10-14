@@ -6,7 +6,8 @@ import { ColorRing } from 'react-loader-spinner';
 import Button from '@mui/material/Button';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Card } from '../components/Card';
-import { ModalWindow } from '../components/Modal';
+import { ModalWindow } from '../components/ModalWindow';
+import { ModalMapWindow } from '../components/ModalMapWindow';
 import { IUser, IWeather } from '../types/types';
 
 export const Home: React.FC = () => {
@@ -15,6 +16,8 @@ export const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [weatherModal, setWeatherModal] = useState<IWeather | null>(null);
+  const [openMapModal, setOpenMapModal] = useState<boolean>(false);
+  const [userMapModal, setUserMapModal] = useState<IUser | null>(null);
 
   const navigate = useNavigate();
 
@@ -22,7 +25,9 @@ export const Home: React.FC = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://randomuser.me/api/?results=30');
+        const response = await axios.get(
+          'https://randomuser.me/api/?results=30',
+        );
         setLoading(false);
         setUsers(response.data.results);
       } catch (error) {
@@ -43,13 +48,20 @@ export const Home: React.FC = () => {
     setWeatherModal(weather);
     setOpenModal(true);
   };
+
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  //sm: mobile 640
-  //md: tablet 768
-  //xl:pc 1280
+  const handleOpenMapModal = (user: IUser) => {
+    setUserMapModal(user);
+    setOpenMapModal(true);
+  };
+
+  const handleCloseMapModal = () => {
+    setOpenMapModal(false);
+  };
+
   return (
     <>
       <div className="text-center mt-10 ">
@@ -87,6 +99,7 @@ export const Home: React.FC = () => {
             saveButton={true}
             loading={loading}
             onWeatherClick={handleOpenModal}
+            onMapClick={handleOpenMapModal}
           />
         ))}
       </div>
@@ -108,6 +121,11 @@ export const Home: React.FC = () => {
         open={openModal}
         handleClose={handleCloseModal}
         weatherModal={weatherModal}
+      />
+      <ModalMapWindow
+        open={openMapModal}
+        handleClose={handleCloseMapModal}
+        userMapModal={userMapModal}
       />
     </>
   );

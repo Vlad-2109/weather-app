@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Card } from '../components/Card';
-import { ModalWindow } from '../components/Modal';
+import { ModalWindow } from '../components/ModalWindow';
 import { getLocalStorage } from '../helpers/localStorage.helper';
-import { IUserWeatherData, IWeather } from '../types/types';
-
+import { IUser, IUserWeatherData, IWeather } from '../types/types';
+import { ModalMapWindow } from '../components/ModalMapWindow';
 
 export const SavedCards: React.FC = () => {
   const [userWeatherData, setUserWeatherData] = useState<IUserWeatherData[]>([]);
   const [visibleUsers, setVisibleUsers] = useState<number>(6);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [weatherModal, setWeatherModal] = useState<IWeather | null>(null);
+  const [openMapModal, setOpenMapModal] = useState<boolean>(false);
+  const [userMapModal, setUserMapModal] = useState<IUser | null>(null);
 
   const navigate = useNavigate();
 
@@ -31,6 +33,15 @@ export const SavedCards: React.FC = () => {
   };
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleOpenMapModal = (user: IUser) => {
+    setUserMapModal(user);
+    setOpenMapModal(true);
+  };
+
+  const handleCloseMapModal = () => {
+    setOpenMapModal(false);
   };
 
   return (
@@ -63,6 +74,7 @@ export const SavedCards: React.FC = () => {
                   saveButton={false}
                   loading={false}
                   onWeatherClick={handleOpenModal}
+                  onMapClick={handleOpenMapModal}
                 />
               ))}
           </div>
@@ -84,6 +96,11 @@ export const SavedCards: React.FC = () => {
             open={openModal}
             handleClose={handleCloseModal}
             weatherModal={weatherModal}
+          />
+          <ModalMapWindow
+            open={openMapModal}
+            handleClose={handleCloseMapModal}
+            userMapModal={userMapModal}
           />
         </>
       )}

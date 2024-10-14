@@ -4,24 +4,17 @@ import { toast } from 'react-toastify';
 import { FaMale, FaFemale } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
 import { IoLocationSharp } from 'react-icons/io5';
-import { CardProps, IUser, IWeather } from '../types/types';
+import Button from '@mui/material/Button';
 import { getWeatherData } from '../api/weather.api';
 import { getWeatherIcon } from '../helpers/weather.helper';
+import { setLocalStorage } from '../helpers/localStorage.helper';
 import highestTemperature from '../assets/img/high-temperature.svg';
 import lowestTemperature from '../assets/img/low-temperature.svg';
-import Button from '@mui/material/Button';
-import { setLocalStorage } from '../helpers/localStorage.helper';
+import { CardProps, IUser, IWeather } from '../types/types';
 
-export const Card: React.FC<CardProps> = ({
-  user,
-  loading,
-  saveButton,
-  onWeatherClick,
-}) => {
+export const Card: React.FC<CardProps> = ({user, loading, saveButton, onWeatherClick, onMapClick}) => {
+
   const [weather, setWeather] = useState<IWeather | null>(null);
-  console.log('user', user);
-  console.log('weather', weather);
-  console.log('loading', loading);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -97,7 +90,7 @@ export const Card: React.FC<CardProps> = ({
                 </div>
                 <p className="truncate">{user.email}</p>
               </div>
-              <div className="text-sm flex items-center gap-x-1">
+              <div className="text-sm flex items-center gap-x-1 cursor-pointer hover:underline" onClick={() => onMapClick(user)}>
                 <div className="">
                   <IoLocationSharp />
                 </div>
